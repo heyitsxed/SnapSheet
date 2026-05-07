@@ -30,11 +30,13 @@ final class SnapSheetBottomController: UIPresentationController {
         
         containerView.addSubview(dimmingView)
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissSheet))
+        dimmingView.addGestureRecognizer(tap)
+        dimmingView.isUserInteractionEnabled = true
+        
         presentedViewController.transitionCoordinator?.animate(alongsideTransition: { _ in
             self.dimmingView.alpha = 1
         })
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissSheet))
     }
     
     override func dismissalTransitionWillBegin() {
