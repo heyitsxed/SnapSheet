@@ -26,4 +26,18 @@ Add SnapSheet to your project using Xcode:
 
 1. Open your project in Xcode
 2. Go to **File → Add Packages**
-3. Enter the repository URL:
+3. Enter the repository URL: 
+https://github.com/heyitsxed/SnapSheet
+
+4. Select **Up to Next Major Version**
+5. Click **Add Package**
+
+---
+
+## 🚀 Usage
+
+### 1. Import SnapSheet
+
+```swift
+import SnapSheet
+```
