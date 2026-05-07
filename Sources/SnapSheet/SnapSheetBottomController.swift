@@ -45,11 +45,21 @@ final class SnapSheetBottomController: UIPresentationController {
     override var frameOfPresentedViewInContainerView: CGRect {
         guard let containerView else { return .zero }
         
-        let height = containerView.bounds.height * 0.5
-        let y = containerView.bounds.height - height
+        let totalHeight = containerView.bounds.height
+        let sheetHeight: CGFloat
+        
+        switch height {
+        case .fixed(let value):
+            sheetHeight = value
+            
+        case .fraction(let percent):
+            sheetHeight = totalHeight * percent
+        }
+        
+        let y = totalHeight - sheetHeight
         let width = containerView.bounds.width
         
-        return CGRect(x: 0, y: y, width: width, height: height)
+        return CGRect(x: 0, y: y, width: width, height: sheetHeight)
     }
     
     override func presentationTransitionWillBegin() {
