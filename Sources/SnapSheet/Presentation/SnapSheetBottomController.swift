@@ -7,18 +7,12 @@
 
 import UIKit
 
-public enum SnapSheetHeight {
-    case fixed(CGFloat)
-    case fraction(CGFloat)
-}
-
 final class SnapSheetBottomController: UIPresentationController {
     
     private lazy var dimmingView: UIView = {
         let view = UIView()
         view.alpha = 0
         view.isUserInteractionEnabled = true
-        view.backgroundColor = UIColor.black.withAlphaComponent(0.3)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissSheet))
         view.addGestureRecognizer(tap)
@@ -32,13 +26,19 @@ final class SnapSheetBottomController: UIPresentationController {
         return view
     }()
     
+    private lazy var panGesture: UIPanGestureRecognizer = {
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_ :)))
+        return pan
+    }()
+    
     private let height: SnapSheetHeight
+    private let dimmingColor: UIColor
+    private let cornerRadius: CGFloat
     
-    private var panGesture: UIPanGestureRecognizer!
-    
-    init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?, height: SnapSheetHeight) {
-        
-        self.height = height
+    init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?, attributes: SnapSheetAttributes) {
+        self.height = attributes.height
+        self.dimmingColor = attributes.dimmingColor
+        self.cornerRadius = attributes.cornerRadius
         super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
     }
     
@@ -68,10 +68,9 @@ final class SnapSheetBottomController: UIPresentationController {
         containerView.addSubview(dimmingView)
         
         dimmingView.frame = containerView.bounds
+        dimmingView.backgroundColor = dimmingColor
         
-        panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_ :)))
         presentedViewController.view.addGestureRecognizer(panGesture)
-        
         presentedViewController.transitionCoordinator?.animate(alongsideTransition: { _ in
             self.dimmingView.alpha = 1
         })
@@ -85,14 +84,12 @@ final class SnapSheetBottomController: UIPresentationController {
     
     override func containerViewDidLayoutSubviews() {
         super.containerViewDidLayoutSubviews()
-        
         guard let presentedView else { return }
-        
         
         dimmingView.frame = containerView?.bounds ?? .zero
         presentedView.frame = frameOfPresentedViewInContainerView
         
-        presentedView.layer.cornerRadius = 20
+        presentedView.layer.cornerRadius = cornerRadius
         presentedView.layer.maskedCorners = [
             .layerMinXMinYCorner,
             .layerMaxXMinYCorner

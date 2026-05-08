@@ -44,9 +44,10 @@ public class SnapSheetController: UIViewController {
     }
 }
 
+//MARK: - UIViewControllerTransitioningDelegate
+
 extension SnapSheetController: UIViewControllerTransitioningDelegate {
-    
     public func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        SnapSheetBottomController(presentedViewController: presented, presenting: presenting, height: height)
+        SnapSheetBottomController(presentedViewController: presented, presenting: presenting, attributes: SnapSheetAttributes(height: .fraction(0.5)))
     }
 }
