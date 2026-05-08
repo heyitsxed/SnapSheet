@@ -47,8 +47,12 @@ class ViewController: UIViewController {
         let vc = YourViewController()
 
         let height: CGFloat = 400
-        let percent = height / UIScreen.main.bounds.height
-        let attributes = SnapSheetAttributes(height: .fraction(0.8), dimmingColor: .black, cornerRadius: 20)
+        let attributes = SnapSheetAttributes(
+            height: .fraction(0.8),
+            dimmingColor: .black,
+            cornerRadius: 20,
+            showGrabber: true
+        )
 
         let sheet = SnapSheetController(
             contentViewController: vc,
