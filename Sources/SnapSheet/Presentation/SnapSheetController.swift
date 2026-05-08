@@ -10,13 +10,14 @@ import UIKit
 public class SnapSheetController: UIViewController {
     
     private let contentViewController: UIViewController
-    private let height: SnapSheetHeight
+    private let attributes: SnapSheetAttributes
 
-    public init(contentViewController: UIViewController, height: SnapSheetHeight = .fraction(0.5)) {
+    public init(contentViewController: UIViewController, attributes: SnapSheetAttributes) {
         self.contentViewController = contentViewController
-        self.height = height
+        self.attributes = attributes
+
         super.init(nibName: nil, bundle: nil)
-        
+
         modalPresentationStyle = .custom
         transitioningDelegate = self
     }
@@ -48,6 +49,6 @@ public class SnapSheetController: UIViewController {
 
 extension SnapSheetController: UIViewControllerTransitioningDelegate {
     public func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        SnapSheetBottomController(presentedViewController: presented, presenting: presenting, attributes: SnapSheetAttributes(height: .fraction(0.5)))
+        SnapSheetBottomController(presentedViewController: presented, presenting: presenting, attributes: attributes)
     }
 }
