@@ -34,11 +34,13 @@ final class SnapSheetBottomController: UIPresentationController {
     private let height: SnapSheetHeight
     private let dimmingColor: UIColor
     private let cornerRadius: CGFloat
+    private let showGrabber: Bool
     
     init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?, attributes: SnapSheetAttributes) {
         self.height = attributes.height
         self.dimmingColor = attributes.dimmingColor
         self.cornerRadius = attributes.cornerRadius
+        self.showGrabber = attributes.showGrabber
         super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
     }
     
@@ -87,6 +89,7 @@ final class SnapSheetBottomController: UIPresentationController {
         guard let presentedView else { return }
         
         dimmingView.frame = containerView?.bounds ?? .zero
+        grabberView.isHidden = !showGrabber
         presentedView.frame = frameOfPresentedViewInContainerView
         
         presentedView.layer.cornerRadius = cornerRadius
