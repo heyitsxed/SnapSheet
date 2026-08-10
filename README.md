@@ -46,7 +46,7 @@ class ViewController: UIViewController {
     func presentSheet() {
         let vc = YourViewController()
 
-        let height: CGFloat = 400
+        let height: CGFloat = SnapSheetheight.fraction(0.5)
         let attributes = SnapSheetAttributes(
             height: height,
             dimmingColor: .black,
