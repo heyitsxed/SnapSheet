@@ -21,7 +21,7 @@ final class SnapSheetBottomController: UIPresentationController {
     
     private let grabberView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.systemGray3
+        view.backgroundColor = UIColor(red: 199/255.0, green: 199/255.0, blue: 204/255.0, alpha: 1.0)
         view.layer.cornerRadius = 2.5
         return view
     }()
