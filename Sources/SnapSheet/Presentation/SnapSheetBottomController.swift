@@ -121,10 +121,13 @@ final class SnapSheetBottomController: UIPresentationController {
         switch gesture.state {
             
         case .changed:
-            if translation.y > 0 {
-                presentedView.frame.origin.y += translation.y
-                gesture.setTranslation(.zero, in: containerView)
-            }
+            let newY = presentedView.frame.origin.y + translation.y
+
+             if newY >= frameOfPresentedViewInContainerView.minY {
+                 presentedView.frame.origin.y = newY
+             }
+
+             gesture.setTranslation(.zero, in: containerView)
             
         case .ended:
             let shouldDismiss = translation.y > 150 || velocity.y > 1000
