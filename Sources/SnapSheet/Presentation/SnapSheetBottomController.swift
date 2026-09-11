@@ -21,7 +21,6 @@ final class SnapSheetBottomController: UIPresentationController {
     
     private let grabberView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red: 199/255.0, green: 199/255.0, blue: 204/255.0, alpha: 1.0)
         view.layer.cornerRadius = 2.5
         return view
     }()
@@ -35,12 +34,14 @@ final class SnapSheetBottomController: UIPresentationController {
     private let dimmingColor: UIColor
     private let cornerRadius: CGFloat
     private let showGrabber: Bool
+    private let grabberColor: UIColor
     
     init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?, attributes: SnapSheetAttributes) {
         self.height = attributes.height
         self.dimmingColor = attributes.dimmingColor
         self.cornerRadius = attributes.cornerRadius
         self.showGrabber = attributes.showGrabber
+        self.grabberColor = attributes.grabberColor
         super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
     }
     
@@ -71,6 +72,7 @@ final class SnapSheetBottomController: UIPresentationController {
         
         dimmingView.frame = containerView.bounds
         dimmingView.backgroundColor = dimmingColor
+        grabberView.backgroundColor = grabberColor
         
         presentedViewController.view.addGestureRecognizer(panGesture)
         presentedViewController.transitionCoordinator?.animate(alongsideTransition: { _ in
